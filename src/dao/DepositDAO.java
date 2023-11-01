@@ -1,6 +1,6 @@
 package dao;
 
-import com.bank.model.User;
+import com.bank.model.Deposit;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,48 +8,41 @@ import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class DepositDAO {
 
     protected static EntityManagerFactory emf =
             Persistence.createEntityManagerFactory("danielPU");
 
-    public UserDAO() {
+    public DepositDAO() {
 
     }
 
-    public void persistUser(User user) {
+    public void persistDeposit(Deposit deposit) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.persist(user);
+        em.persist(deposit);
         em.getTransaction().commit();
         em.close();
     }
 
-    public void removeUser(User user) {
+    public void removeDeposit(Deposit deposit) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.remove(em.merge(user));
+        em.remove(em.merge(deposit));
         em.getTransaction().commit();
         em.close();
     }
 
-    public User mergeUser(User user){
+    public List<Deposit> getAllDeposits() {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        User updatedUser = em.merge(user);
+        List<Deposit> deposits = new ArrayList<>();
+        deposits = em.createQuery("from Deposit").getResultList();
         em.getTransaction().commit();
         em.close();
-        return updatedUser;
+        return deposits;
     }
-
-    public List<User> getAllUsers() {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        List<User> users = new ArrayList<User>();
-        users = em.createQuery("from User").getResultList();
-        em.getTransaction().commit();
-        em.close();
-        return users;
-    }
-
 }
+
+
+
