@@ -1,10 +1,11 @@
-package dao;
-
-import com.bank.model.Deposit;
+package com.example.bank;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import com.example.bank.model.Deposit;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,18 @@ public class DepositDAO {
         em.close();
     }
 
+    public Deposit getDepositByDepId(String depId) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Deposit deposit = em.createQuery("SELECT d FROM Deposit d WHERE d.depId = :depId", Deposit.class)
+                .setParameter("depId", depId)
+                .getSingleResult();
+        em.getTransaction().commit();
+        em.close();
+        return deposit;
+    }
+
+
     public List<Deposit> getAllDeposits() {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -43,6 +56,3 @@ public class DepositDAO {
         return deposits;
     }
 }
-
-
-

@@ -1,39 +1,44 @@
-package com.bank.model;
+package com.example.bank.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(
+        name = "deposit"
+
+)
 @Entity
 public class Deposit {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
 
+    private int id;
+    private String depId;
     private String depositDate;
     private double depositAmount;
-
-    @ManyToOne
-    private User user;
-
 
     public Deposit() {
 
     }
 
-    public Deposit(String depositDate, double depositAmount, User user) {
+    public Deposit(String depId, String depositDate, double depositAmount) {
+        this.depId = depId;
         this.depositDate = depositDate;
         this.depositAmount = depositAmount;
-        this.user = user;
     }
 
-    public int getId() {
-        return id;
+    @XmlElement
+    public String getDepId() {
+        return depId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDepId(String depId) {
+        this.depId = depId;
     }
 
+    @XmlElement
     public String getDepositDate() {
         return depositDate;
     }
@@ -42,19 +47,12 @@ public class Deposit {
         this.depositDate = depositDate;
     }
 
+    @XmlElement
     public double getDepositAmount() {
         return depositAmount;
     }
 
     public void setDepositAmount(double depositAmount) {
         this.depositAmount = depositAmount;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

@@ -1,40 +1,51 @@
-package com.bank.model;
+package com.example.bank.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
 
+    private int id;
+    private String userId;
     private String name;
     private String phoneNumber;
     private String address;
     private double annualSalary;
 
+    @OneToOne
+    private Loan loan;
+
     public User() {
 
     }
 
-    public User(String name, String phoneNumber, String address, double annualSalary) {
+
+    public User(String userId, String name, String phoneNumber, String address, double annualSalary) {
+        this.userId = userId;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.annualSalary = annualSalary;
     }
 
-    public int getId() {
-        return id;
+
+    public String getUserId() {
+        return this.userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
+
 
     public String getName() {
         return name;
@@ -44,6 +55,7 @@ public class User {
         this.name = name;
     }
 
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -52,6 +64,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+
     public String getAddress() {
         return address;
     }
@@ -59,6 +72,7 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+
 
     public double getAnnualSalary() {
         return annualSalary;
